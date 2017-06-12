@@ -63,12 +63,12 @@ app.get("/scrape", function(req, res) {
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
       var entry = new Article(result);
-
-      //Check to see if the entry already exists
-      var query = { title : entry.title}
-      entry.findOneAndUpdate(query, { set: { title : entry.title }}, { new: true }, function(err, doc) {
+      console.log(entry);
+      console.log("Entry Title",entry.title);
       
-      // // Now, save that entry to the db
+      Article.findOneAndUpdate({"title":entry.title}, {"_id": entry._id, "title": entry.title, "link": entry.link},{upsert:true, returnNewDocument : true }).exec(function(err, doc) {
+      
+      // Now, save that entry to the db
       // entry.save(function(err, doc) {
         // Log any errors
         if (err) {
