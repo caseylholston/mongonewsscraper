@@ -27,8 +27,8 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // Database configuration with mongoose
-//mongoose.connect("mongodb://localhost/mongonewsscraper");
-mongoose.connect("mongodb://heroku_rkdf86mf:5vn5ol10sauvd93a1i0r0asjtk@ds163301.mlab.com:63301/heroku_rkdf86mf");
+mongoose.connect("mongodb://localhost/mongonewsscraper");
+//mongoose.connect("mongodb://heroku_rkdf86mf:5vn5ol10sauvd93a1i0r0asjtk@ds163301.mlab.com:63301/heroku_rkdf86mf");
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -151,6 +151,17 @@ app.post("/articles/:id", function(req, res) {
   });
 })
 
+app.delete("/remove/note/:id", function(req, res) {
+  Note.findByIdAndRemove({ "_id": req.params.id }, function(err,doc) {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          // Or send the document to the browser
+          res.send(doc);
+        }
+  });
+});
 
 // Listen on port 3000
 app.listen(PORT, function() {
