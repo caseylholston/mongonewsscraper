@@ -31,8 +31,7 @@ $(document).on("click", "p", function() {
       $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
       $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
-      //A button to delete a note
-      $("#notes").append("<button data-id='" + data.note._id + "' id='deletenote'>Delete Note</button>");
+      
 
       // If there's a note in the article
       if (data.note) {
@@ -40,6 +39,8 @@ $(document).on("click", "p", function() {
         $("#titleinput").val(data.note.title);
         // Place the body of the note in the body textarea
         $("#bodyinput").val(data.note.body);
+        //A button to delete a note
+      $("#notes").append("<button data-id='" + data.note._id + "' id='deletenote'>Delete Note</button>");
       }
     });
 });
@@ -76,7 +77,7 @@ $(document).on("click", "#savenote", function() {
 // When you click the deletenote button
 $(document).on("click", "#deletenote", function() {
   // Grab the id associated with the article from the submit button
-  var thisId = $(this).attr("data-id");
+ var thisId = $(this).attr("data-id");
  var baseURL = window.location.origin;
   // Run a Delete request to change the note, using what's entered in the inputs
   $.ajax({
